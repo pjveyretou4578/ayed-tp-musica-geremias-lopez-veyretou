@@ -5,10 +5,11 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 ## Integrantes
 
 | Nombre | Mail | GitHub |
-| Ariadna Geremias--- | --- | --- |
-| lucas Lopez |  |  |
-| Pablo Veyretou|  |  |
-|  |  |  |
+| --- | --- | --- |
+|Ariadna Geremias|  |  |
+|lucas Lopez |  |  |
+|Pablo Veyretou|  |pjveyretou4578  |
+
 
 **Tema elegido:** Biblioteca musical 
 
