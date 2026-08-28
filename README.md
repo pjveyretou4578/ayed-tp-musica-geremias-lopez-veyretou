@@ -5,12 +5,12 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 ## Integrantes
 
 | Nombre | Mail | GitHub |
-| --- | --- | --- |
-|  |  |  |
-|  |  |  |
+| Ariadna Geremias--- | --- | --- |
+| lucas Lopez |  |  |
+| Pablo Veyretou|  |  |
 |  |  |  |
 
-**Tema elegido:** Pokédex / Recetario / Biblioteca musical (dejar uno)
+**Tema elegido:** Biblioteca musical 
 
 ## Cómo ejecutar
 
