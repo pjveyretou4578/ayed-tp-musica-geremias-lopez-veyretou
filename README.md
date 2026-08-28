@@ -6,7 +6,7 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 
 | Nombre | Mail | GitHub |
 | --- | --- | --- |
-|Ariadna Geremias|ageremias11gmail.com|Ariadna1491|
+|Ariadna Geremias|ageremias@11gmail.com|Ariadna1491|
 |lucas Lopez |lucas77lopez@gmail.com|LucasL8505|
 |Pablo Veyretou|pjveyretou@gmail.com|pjveyretou4578|
 
