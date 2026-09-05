@@ -2,11 +2,11 @@
 
 Actualizar **en cada entrega**. Si no usaron IA, dejar una fila que lo diga. No declarar cuando sí se usó anula la entrega.
 
-Fecha de esta versión del archivo:
+Fecha de esta versión del archivo: 05/09/2026
 
 | Entrega | Fecha | Herramienta (ChatGPT, Cursor, Copilot, otra) | Para qué (diseño, código, debug, docs) | Qué pegaron o generaron | Qué reescribieron / revisaron a mano | Integrante |
 | --- | --- | --- | --- | --- | --- | --- |
-| E1 |  |  |  |  |  |  |
+| E1 |04/09/2026|ChatGPT|Comprension de la consigna,apoyo en código,correcciones de errores y documentación|Ejemplos para armar el catálogo, conectar la opción 1 del menú y redactar partes del informe|El código fue probado y revisado en VS Code. Se modificaron textos y se revisó cada parte para entenderla|Pablo Veyretou|
 | E2 |  |  |  |  |  |  |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |

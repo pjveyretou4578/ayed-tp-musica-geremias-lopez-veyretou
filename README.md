@@ -4,10 +4,12 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 
 ## Integrantes
 
+**Grupo:** 2
+
 | Nombre | Mail | GitHub |
 | --- | --- | --- |
 |Ariadna Geremias|ageremias11@gmail.com|Ariadna1491|
-|lucas Lopez |lucas77lopez@gmail.com|LucasL8505|
+|Lucas Lopez |lucas77lopez@gmail.com|LucasL8505|
 |Pablo Veyretou|pjveyretou@gmail.com|pjveyretou4578|
 
 
@@ -32,7 +34,7 @@ Cada vencimiento se marca con un tag. Ver `GIT.md`.
 | Tag | Vence |
 | --- | --- |
 | `preentrega` (opcional, solo repo) | domingo 30-ago-2026 23:59 |
-| `entrega-1` | domingo 06-sep-2026 23:59 |
+| `entrega-1` | viernes 11-sep-2026 23:59 |
 | `entrega-2` | domingo 20-sep-2026 23:59 |
 | `entrega-3` | domingo 04-oct-2026 23:59 |
 | `entrega-4` | domingo 01-nov-2026 23:59 |
