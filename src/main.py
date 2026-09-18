@@ -1,5 +1,10 @@
 from src.config import TEMA
-from src.dominio.cancion import listar_catalogo
+from src.dominio.cancion import catalogo
+from src.dominio.versiones import mostrar_cadena_versiones
+from src.dominio.biblioteca import Biblioteca
+
+biblioteca = Biblioteca(catalogo)
+
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -20,7 +25,7 @@ def mostrar_menu():
     print("2. Ver detalle")
     print("3. Buscar")
     print("4. Ordenar")
-    print("5. Operación recursiva")
+    print("5. Mostrar versiones derivadas")
     print("6. Colección principal (equipo / menú / playlist)")
     print("7. Historial (pila)")
     print("8. Cola")
@@ -39,10 +44,13 @@ def main():
         opcion = input("> ").strip()
         if opcion == "0":
             print("Chau.")
-        elif opcion in {"2", "3", "4", "5", "6", "7", "8", "9"}:
+        elif opcion in {"2", "3", "4", "6", "7", "8", "9"}:
             pendiente()
         elif opcion == "1":
-            listar_catalogo()       
+            biblioteca.listar_catalogo() 
+        elif opcion == "5":
+            mostrar_cadena_versiones(biblioteca)        
+               
         else:
             print("Opción inválida.")
 
