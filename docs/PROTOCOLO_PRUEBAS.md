@@ -17,3 +17,11 @@ En la Entrega 2 no es obligatorio ejecutar formalmente todos los casos. Por ese 
 | P09 | E2 | Presionar Enter sin ingresar una opción | Entrada vacía | Se muestra `Opción inválida.` y vuelve a aparecer el menú. | No corrido | Comprueba que una entrada vacía en el menú no produce un error. |
 | P10 | E2 | Salir del programa | Opción `0` | Se muestra `Chau.` y finaliza el programa. | No corrido | Comprueba la salida normal del programa. |
 | P11 | E2 | Ingresar un id no numérico | Opción `5`, id `abc` | Se muestra `El ID debe ser un numero.` y el programa vuelve al menú. | No corrido | Comprueba que una entrada no numérica no produce un error de ejecución. |
+## Entrega 3 — Pruebas ejecutadas
+
+| ID E3 | Acción | Resultado esperado | Resultado |
+| --- | --- | --- | --- |
+| P05 | Agregar canciones a la playlist hasta superar el tope | La sexta canción no se agrega y se muestra `La playlist esta llena` | PASA |
+| P06 | Sacar una reproducción con el historial vacío | Se muestra que la pila está vacía y el programa continúa | PASA |
+| P07   | Desencolar una cola de reproducción vacía | Se produce `ColaVaciaError`, se muestra `La cola esta vacia` y el programa continúa | PASA |
+| P08 | Listar la playlist | Las canciones aparecen en el mismo orden en que fueron agregadas | PASA |

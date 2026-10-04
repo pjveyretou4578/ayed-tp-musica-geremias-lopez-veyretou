@@ -10,4 +10,6 @@ Codificación: UTF-8. Separador: coma. La primera fila es encabezado.
 | Recetario | `recetas.csv`, `ingredientes.csv`, `subrecetas.csv` | `receta_id` usa `subreceta_id` |
 | Biblioteca musical | `canciones.csv`, `versiones.csv` | `cancion_id` es versión de `version_de_id` (`cover`, `live`, `remix`) |
 
-No hardcodees las filas en el código: leé los CSV.
+Los archivos CSV quedan disponibles en `data/` para las entregas posteriores.
+
+Hasta la Entrega 4 el catálogo se mantiene cargado en el código. La lectura y escritura de archivos se implementará en la Entrega 5.

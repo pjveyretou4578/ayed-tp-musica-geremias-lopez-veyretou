@@ -50,22 +50,24 @@ De esta manera, la clase `Biblioteca` se encarga de encontrar las versiones dire
 
 La clase `Playlist` representa una selección de canciones.
 
-Cada objeto `Playlist` tiene un nombre y una lista de canciones.
+Cada objeto `Playlist` tiene un nombre, una colección de canciones y un máximo permitido.
+
+En la Entrega 3, las canciones de la playlist se almacenan en una `ListaEnlazada`.
 
 Actualmente posee los métodos:
 
-- `agregar_cancion(cancion)`: agrega una canción a la playlist.
+- `agregar_cancion(cancion)`: agrega una canción a la playlist si no se alcanzó el máximo.
 - `duracion_total()`: calcula la duración total de las canciones agregadas.
+- `listar()`: muestra las canciones de la playlist.
+- `eliminar_cancion(cancion)`: elimina una canción de la playlist.
 
-En esta entrega la clase queda definida como parte del modelo del dominio. La funcionalidad completa de la colección principal y los TAD correspondientes se desarrollará en las entregas posteriores.
+Si se intenta superar el máximo de cinco canciones, se lanza `ColeccionLlenaError`.
 
 ### Estructuras utilizadas
 
-En esta entrega se utilizan listas de Python dentro de las clases.
+En la Entrega 3 se reemplazó el uso de listas de Python en la colección principal por una `ListaEnlazada` propia.
 
-Los TAD obligatorios de lista enlazada, pila y cola todavía no se implementan, ya que corresponden a la Entrega 3.
-
-Se conservaron los datos utilizados en la Entrega 1 y se amplió el catálogo para poder representar un caso con varias versiones derivadas y una versión de una versión.
+También se implementaron una `Pila` para el historial de reproducción y una `Cola` para las canciones pendientes de reproducción.
 
 ## 3. Recursión (E2)
 
@@ -327,13 +329,25 @@ La salida mostrada por el programa es:
 
 ## 4. TADs (E3)
 
+En la Entrega 3 se implementaron los TAD lineales requeridos por la cátedra utilizando nodos propios.
+
+La `ListaEnlazada` no utiliza una lista de Python como estructura interna. La `Pila` y la `Cola` se construyen utilizando `ListaEnlazada`.
+
 | TAD | Operaciones | Invariante |
 | --- | --- | --- |
-| ListaEnlazada |  |  |
-| Pila |  |  |
-| Cola |  |  |
+| ListaEnlazada | insertar al inicio, insertar al final, insertar ordenado, eliminar, buscar, obtener tamaño, comprobar si está vacía, recorrer mediante `__iter__` | `_cabeza` apunta al primer nodo o es `None` si la lista está vacía. `_tamanio` coincide con la cantidad de nodos de la lista. Cada nodo apunta al siguiente o a `None` si es el último. |
+| Pila | `apilar`, `desapilar`, `ver_tope`, `esta_vacia`, recorrer con iterador | Se respeta el criterio LIFO: el último elemento apilado es el primero que se desapila. El tope corresponde al primer nodo de la lista enlazada interna. |
+| Cola | `encolar`, `desencolar`, `ver_frente`, `esta_vacia`, recorrer con iterador | Se respeta el criterio FIFO: el primer elemento encolado es el primero que se desencola. Los nuevos elementos se agregan al final y se retiran desde el frente. |
 
-Dónde se usa cada uno en el dominio.
+### Uso de los TAD en el dominio
+
+La `Playlist` es la colección principal del dominio y utiliza una `ListaEnlazada` para almacenar canciones. Se estableció un máximo de cinco canciones. Si se intenta superar ese límite se lanza la excepción `ColeccionLlenaError`.
+
+El historial de reproducción utiliza una `Pila`. Cuando una canción deja de ser la canción actual y se avanza a la siguiente, la canción anterior se apila en el historial. Esto permite consultar o eliminar primero la reproducción más reciente.
+
+La reproducción pendiente utiliza una `Cola`. Al iniciar la reproducción de una playlist, sus canciones se encolan en el mismo orden en que aparecen en la playlist. La primera canción pendiente es la primera que se reproduce.
+
+El recorrido de las estructuras se realiza mediante el iterador definido con `__iter__` y `yield`.
 
 ## 5. Complejidad (E4)
 
