@@ -353,13 +353,49 @@ El recorrido de las estructuras se realiza mediante el iterador definido con `__
 
 | Operación | Tiempo | Espacio | Por qué |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| Listar catálogo en dos columnas | O(n²) | O(1) | Para cada canción se vuelve a recorrer el catálogo para detectar títulos repetidos. |
+| Buscar canción por ID | O(n) peor caso | O(1) | Se recorren las canciones una por una hasta encontrar el ID o llegar al final. |
+| Búsqueda lineal por título | O(n) peor / O(1) mejor | O(1) | Puede encontrar la canción en la primera comparación o recorrer todo el catálogo. |
+| Búsqueda binaria por título | O(log n) | O(1) | En cada comparación se descarta aproximadamente la mitad del rango de búsqueda. |
+| Ordenamiento por selección | O(n²) | O(n) | Para cada posición se recorre el resto de la colección para buscar el menor. Además se crea una copia de la colección. |
+| Ordenamiento por inserción | O(n) mejor / O(n²) peor | O(n) | Si ya está ordenado casi no desplaza elementos; en el peor caso desplaza muchos. Además se crea una copia de la colección. |
+| Recorrer versiones derivadas | O(n²) peor caso | O(n) | Por cada canción visitada por la recursión se vuelve a recorrer el catálogo para buscar versiones directas. |
+| Listar playlist | O(p) | O(1) | Se recorre una vez la lista enlazada de la playlist. |
+| Ver tope de pila | O(1) | O(1) | Se accede directamente al primer nodo. |
+| Apilar | O(1) | O(1) | Se inserta al inicio de la lista enlazada. |
+| Desapilar | O(1) | O(1) | Se elimina el primer nodo de la lista enlazada. |
+| Desencolar | O(1) | O(1) | Se elimina el primer nodo de la cola. |
+| Encolar | O(n) | O(1) | La implementación actual recorre la lista enlazada hasta llegar al último nodo para insertar. |
 
 Mediciones (`time.perf_counter`):
 
 | Operación | n | segundos |
 | --- | --- | --- |
-|  |  |  |
+| Búsqueda lineal | 71 | 0.0000148 |
+| Búsqueda lineal | 710 | 0.000117 |
+| Búsqueda binaria | 71 | 0.00000402 |
+| Búsqueda binaria | 710 | 0.00000794 |
+| Ordenamiento por selección | 71 | 0.000926 |
+| Ordenamiento por selección | 710 | 0.09416 |
+| Ordenamiento por inserción | 71 | 0.001657 |
+| Ordenamiento por inserción | 710 | 0.06430 |
+
+Para reducir la variación de mediciones muy pequeñas, cada búsqueda se ejecutó 1000 veces y cada ordenamiento 100 veces. En la tabla se informa el tiempo promedio por ejecución.
+
+Los tiempos corresponden a una corrida de medición realizada con `time.perf_counter()`. Pueden variar entre ejecuciones según la carga del sistema, por lo que se utiliza principalmente la tendencia de crecimiento para comparar con la complejidad teórica.
+
+En la búsqueda binaria se midió únicamente la función de búsqueda sobre una colección previamente ordenada por título. El tiempo necesario para ordenar la colección no se incluyó en la medición, ya que se buscó observar específicamente el comportamiento O(log n) de la búsqueda binaria.
+
+### Comparación con la complejidad teórica
+
+| Operación | Aumento de n | Aumento observado | Comportamiento teórico |
+| --- | --- | --- | --- |
+| Búsqueda lineal | 10 veces | 7.9 veces | O(n): se esperaba un aumento cercano a 10 veces. |
+| Búsqueda binaria | 10 veces | 2.0 veces | O(log n): el tiempo aumenta poco al crecer n. |
+| Ordenamiento por selección | 10 veces | 101.7 veces | O(n²): se esperaba un aumento cercano a 100 veces. |
+| Ordenamiento por inserción | 10 veces | 38.8 veces | O(n²) en el peor caso; depende del orden inicial de los datos. |
+
+Los resultados son coherentes con las complejidades teóricas. La búsqueda lineal aumentó aproximadamente en proporción al tamaño del catálogo, mientras que la búsqueda binaria aumentó mucho menos. El ordenamiento por selección mostró un crecimiento prácticamente cuadrático. En el ordenamiento por inserción el aumento fue menor que el peor caso teórico porque la cantidad de desplazamientos depende del orden inicial de los elementos.
 
 ## 6. Persistencia (E5)
 

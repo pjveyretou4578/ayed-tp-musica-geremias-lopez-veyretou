@@ -25,3 +25,13 @@ En la Entrega 2 no es obligatorio ejecutar formalmente todos los casos. Por ese 
 | P06 | Sacar una reproducción con el historial vacío | Se muestra que la pila está vacía y el programa continúa | PASA |
 | P07   | Desencolar una cola de reproducción vacía | Se produce `ColaVaciaError`, se muestra `La cola esta vacia` y el programa continúa | PASA |
 | P08 | Listar la playlist | Las canciones aparecen en el mismo orden en que fueron agregadas | PASA |
+
+## Entrega 4 — Pruebas ejecutadas
+
+| ID E4 | Acción | Datos de entrada | Resultado esperado | Resultado |
+| --- | --- | --- | --- | --- |
+| P09 | Búsqueda lineal de una canción existente | Buscar por título `La Balsa` | Se encuentra la canción y se muestran ID, título, artista, álbum y duración | PASA |
+| P10 | Búsqueda lineal de una canción inexistente | Buscar `Cancion que no existe` | Se muestra `Canción no encontrada.` | PASA |
+| P11 | Búsqueda binaria sobre el catálogo | Buscar por título `La Balsa` mediante búsqueda binaria | El catálogo se ordena previamente por título, se informa al usuario y se muestran ID, título, artista, álbum y duración | PASA |
+| P12 | Ordenar el catálogo con distintos algoritmos y criterios | Elegir selección o inserción y ordenar por título, duración o artista | El catálogo se ordena según el algoritmo y criterio elegidos, mostrando título, artista y duración | PASA |
+| P13 | Regresión de E3 | Probar versiones derivadas con ID 68, agregar/listar/eliminar en playlist, historial vacío y reproducción con cola | Versiones, playlist, pila e historial, y cola/reproducción funcionan sin errores | PASA |
