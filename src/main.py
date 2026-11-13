@@ -1,13 +1,27 @@
 from src.config import TEMA
-from src.dominio.cancion import catalogo
+from src.persistencia.texto import cargar_canciones, cargar_versiones, guardar_catalogo
+from src.persistencia.binario import guardar_binario, cargar_binario, actualizar_registro
 from src.dominio.versiones import mostrar_cadena_versiones
 from src.dominio.biblioteca import Biblioteca
 from src.dominio.playlist import Playlist
 from src.tads.pila import Pila
 from src.tads.cola import Cola
-from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
+from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError, ArchivoInvalidoError
 from src.algoritmos.busqueda import busqueda_lineal, busqueda_binaria
 from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
+from src.dominio.cancion import Cancion
+from pathlib import Path
+from datetime import datetime
+
+error_inicio = None
+
+try:
+    catalogo = cargar_canciones("data/canciones.txt")
+    cargar_versiones("data/versiones.txt", catalogo)
+
+except ArchivoInvalidoError as error:
+    error_inicio = error
+    catalogo = []
 
 biblioteca = Biblioteca(catalogo)
 
@@ -53,7 +67,7 @@ def mostrar_menu():
     print("6. Playlist")
     print("7. Historial (pila)")
     print("8. Reproducción")
-    print("9. Guardar / cargar archivos")
+    print("9. Guardar / cargar / gestionar datos")
     print("0. Salir")
 
 
@@ -201,7 +215,6 @@ def menu_historial():
                     "-",
                     cancion.artista
                 )
-
         else:
             print("Opcion invalida.")
 
@@ -416,7 +429,7 @@ def menu_ordenar():
                 "-",
                 cancion.titulo,
                 "-",
-                
+
                 cancion.duracion_seg,
                 "segundos"
             )
@@ -484,9 +497,311 @@ def menu_buscar():
     else:
         print("Opcion invalida.")
 
+def menu_persistencia():
+
+    while True:
+
+        print()
+        print("--- Guardar / cargar / gestionar datos ---")
+        print("1. Agregar canción")
+        print("2. Modificar canción")
+        print("3. Eliminar canción")
+        print("4. Guardar catálogo en texto")
+        print("5. Cargar catálogo desde texto")
+        print("6. Guardar catálogo en binario")
+        print("7. Cargar catálogo desde binario")
+        print("0. Volver")
+
+        print()
+        opcion = input("Ingrese una opcion: ").strip()
+
+        if opcion == "0":
+            break
+
+        elif opcion == "1":
+
+            print()
+            print("--- Alta de canción ---")
+
+            nuevo_id = 1
+
+            for cancion in catalogo:
+                if cancion.id >= nuevo_id:
+                    nuevo_id = cancion.id + 1
+
+            print("ID asignado:", nuevo_id)
+
+            titulo = input("Título: ").strip()
+            artista = input("Artista: ").strip()
+            album = input("Álbum: ").strip()
+            genero = input("Género: ").strip()
+
+            entrada_anio = input("Año: ").strip()
+            entrada_duracion = input("Duración en segundos: ").strip()
+
+            if not entrada_anio.isdigit() or not entrada_duracion.isdigit():
+                print("Año y duración deben ser numéricos.")
+                continue
+
+            anio = int(entrada_anio)
+            duracion = int(entrada_duracion)
+
+            anio_actual = datetime.now().year
+
+            if anio < 1 or anio > anio_actual:
+                print(f"El año debe estar entre 1 y {anio_actual}.")
+                continue
+
+            if duracion < 1 or duracion > 65535:
+                print("La duración debe estar entre 1 y 65535 segundos.")
+                continue
+
+            nueva = Cancion(
+                nuevo_id,
+                titulo,
+                artista,
+                album,
+                genero,
+                anio,
+                duracion,
+                None,
+                None
+            )
+
+            catalogo.append(nueva)
+
+            guardar_catalogo(catalogo)
+            guardar_binario("data/canciones.bin", catalogo)
+
+            print("Canción agregada y cambios guardados.")
+
+        elif opcion == "2":
+
+            print()
+            print("--- Modificar canción ---")
+
+            entrada_id = input("ID de la canción a modificar: ").strip()
+
+            if not entrada_id.isdigit():
+                print("El ID debe ser numérico.")
+                continue
+
+            id_cancion = int(entrada_id)
+
+            cancion = biblioteca.buscar_por_id(id_cancion)
+
+            if cancion is None:
+                print("Canción no encontrada.")
+                continue
+
+            print("Título actual:", cancion.titulo)
+            titulo = input("Nuevo título (Enter para mantener): ").strip()
+
+            print("Artista actual:", cancion.artista)
+            artista = input("Nuevo artista (Enter para mantener): ").strip()
+
+            print("Álbum actual:", cancion.album)
+            album = input("Nuevo álbum (Enter para mantener): ").strip()
+
+            print("Género actual:", cancion.genero)
+            genero = input("Nuevo género (Enter para mantener): ").strip()
+
+            print("Año actual:", cancion.anio)
+            entrada_anio = input("Nuevo año (Enter para mantener): ").strip()
+
+            print("Duración actual:", cancion.duracion_seg)
+            entrada_duracion = input(
+                "Nueva duración en segundos (Enter para mantener): "
+            ).strip()
+
+            if entrada_anio and not entrada_anio.isdigit():
+                print("El año debe ser numérico.")
+                continue
+
+            if entrada_duracion and not entrada_duracion.isdigit():
+                print("La duración debe ser numérica.")
+                continue
+
+            if entrada_anio:
+                nuevo_anio = int(entrada_anio)
+
+                anio_actual = datetime.now().year
+
+                if nuevo_anio < 1 or nuevo_anio > anio_actual:
+                    print(f"El año debe estar entre 1 y {anio_actual}.")
+                    continue
+
+            if entrada_duracion:
+                nueva_duracion = int(entrada_duracion)
+
+                if nueva_duracion < 1 or nueva_duracion > 65535:
+                    print("La duración debe estar entre 1 y 65535 segundos.")
+                    continue
+
+            if titulo:
+                cancion.titulo = titulo
+
+            if artista:
+                cancion.artista = artista
+
+            if album:
+                cancion.album = album
+
+            if genero:
+                cancion.genero = genero
+
+            if entrada_anio:
+                cancion.anio = nuevo_anio
+
+            if entrada_duracion:
+                cancion.duracion_seg = nueva_duracion
+
+            while True:
+                entrada_version = input(
+                    "Nuevo ID de origen, None para independiente "
+                    "o Enter para mantener: "
+                ).strip()
+
+                if entrada_version == "":
+                    break
+
+                if entrada_version.lower() == "none":
+                    cancion.version_de = None
+                    cancion.tipo_version = None
+                    break
+
+                if entrada_version.isdigit():
+                    nuevo_origen = int(entrada_version)
+
+                    if biblioteca.buscar_por_id(nuevo_origen) is None:
+                        print("Ese ID no existe.")
+                        continue
+
+                    if nuevo_origen == cancion.id:
+                        print("Una canción no puede derivar de sí misma.")
+                        continue
+
+                    cancion.version_de = nuevo_origen
+
+                    while True:
+                        tipo = input(
+                            "Tipo de versión (cover/live/remix): "
+                        ).strip().lower()
+
+                        if tipo == "cover" or tipo == "live" or tipo == "remix":
+                            cancion.tipo_version = tipo
+                            break
+
+                        print("Debe ingresar cover, live o remix.")
+
+                    break
+
+                print("Debe ingresar un ID numérico, None o Enter.")
+
+            guardar_catalogo(catalogo)
+
+            ruta_binario = Path("data/canciones.bin")
+
+            if ruta_binario.exists():
+                canciones_binario = cargar_binario(ruta_binario)
+                posicion = None
+
+                for i in range(len(canciones_binario)):
+                    if canciones_binario[i].id == cancion.id:
+                        posicion = i
+                        break
+
+                if posicion is not None:
+                    actualizar_registro(ruta_binario, posicion, cancion)
+
+            print("Canción modificada y guardada.")
+
+        elif opcion == "3":
+
+            print()
+            print("--- Eliminar canción ---")
+
+            entrada_id = input("ID de la canción a eliminar: ").strip()
+
+            if not entrada_id.isdigit():
+                print("El ID debe ser numérico.")
+                continue
+
+            id_cancion = int(entrada_id)
+
+            cancion = biblioteca.buscar_por_id(id_cancion)
+
+            if cancion is None:
+                print("Canción no encontrada.")
+                continue
+
+            tiene_derivadas = False
+
+            for otra_cancion in catalogo:
+                if otra_cancion.version_de == id_cancion:
+                    tiene_derivadas = True
+                    break
+
+            if tiene_derivadas:
+                print("No se puede eliminar: hay canciones que derivan de ella.")
+                continue
+
+            catalogo.remove(cancion)
+
+            guardar_catalogo(catalogo)
+            guardar_binario("data/canciones.bin", catalogo)
+
+            print("Canción eliminada y cambios guardados.")
+
+        elif opcion == "4":
+            guardar_catalogo(catalogo)
+            print("Catálogo guardado en archivos de texto.")
+
+        elif opcion == "5":
+
+            try:
+                nuevo_catalogo = cargar_canciones("data/canciones.txt")
+                cargar_versiones("data/versiones.txt", nuevo_catalogo)
+
+                catalogo.clear()
+                catalogo.extend(nuevo_catalogo)
+
+                print("Catálogo cargado desde archivos de texto.")
+
+            except ArchivoInvalidoError as error:
+                print("Archivo inválido:", error)
+
+
+        elif opcion == "6":
+            guardar_binario("data/canciones.bin", catalogo)
+            print("Catálogo guardado en archivo binario.")
+
+        elif opcion == "7":
+
+            try:
+                nuevo_catalogo = cargar_binario("data/canciones.bin")
+                cargar_versiones("data/versiones.txt", nuevo_catalogo)
+
+                catalogo.clear()
+                catalogo.extend(nuevo_catalogo)
+
+                print("Catálogo cargado desde archivo binario.")
+
+            except ArchivoInvalidoError as error:
+                print("Archivo inválido:", error)
+
+        else:
+            print("Opción inválida.")
 
 
 def main():
+
+    if error_inicio is not None:
+        print("")
+        print("No se puede iniciar el programa.")
+        print("Archivo inválido:", error_inicio)
+        print("")
+        return
 
     if TEMA not in TEMAS:
         print(
@@ -511,16 +826,19 @@ def main():
             print()
             print("Chau.")
 
-        elif opcion in {"2", "9"}:
+        elif opcion == "2":
             pendiente()
 
+        elif opcion == "9":
+            menu_persistencia()
+
         elif opcion == "3":
-            
+
             menu_buscar()
 
         elif opcion == "4":
-            
-            menu_ordenar()   
+
+            menu_ordenar()
 
         elif opcion == "8":
 

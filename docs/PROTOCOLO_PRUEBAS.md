@@ -34,4 +34,12 @@ En la Entrega 2 no es obligatorio ejecutar formalmente todos los casos. Por ese 
 | P10 | Búsqueda lineal de una canción inexistente | Buscar `Cancion que no existe` | Se muestra `Canción no encontrada.` | PASA |
 | P11 | Búsqueda binaria sobre el catálogo | Buscar por título `La Balsa` mediante búsqueda binaria | El catálogo se ordena previamente por título, se informa al usuario y se muestran ID, título, artista, álbum y duración | PASA |
 | P12 | Ordenar el catálogo con distintos algoritmos y criterios | Elegir selección o inserción y ordenar por título, duración o artista | El catálogo se ordena según el algoritmo y criterio elegidos, mostrando título, artista y duración | PASA |
-| P13 | Regresión de E3 | Probar versiones derivadas con ID 68, agregar/listar/eliminar en playlist, historial vacío y reproducción con cola | Versiones, playlist, pila e historial, y cola/reproducción funcionan sin errores | PASA |
+**Regresión adicional de E3:** se probaron versiones derivadas con ID 68, playlist, historial y reproducción con cola. Todas continuaron funcionando correctamente.
+
+## Entrega 5 — Pruebas ejecutadas
+
+| ID E5 | Acción | Datos de entrada | Resultado esperado | Resultado |
+| --- | --- | --- | --- | --- |
+| P13 | Guardar y recargar texto | Guardar el catálogo en `.txt`, salir del programa y volver a entrar | Las canciones y las relaciones de versiones se mantienen correctamente | PASA |
+| P14 | Actualización binaria | Guardar el catálogo en binario, modificar una canción por ID y volver a cargar desde binario | La modificación queda almacenada y aparece al recargar | PASA |
+| P15 | Archivo inválido | Intentar cargar archivos con magia incorrecta, binario truncado y texto con cantidad incorrecta de campos | Se muestra `ArchivoInvalidoError` con mensaje claro y sin traceback | PASA |

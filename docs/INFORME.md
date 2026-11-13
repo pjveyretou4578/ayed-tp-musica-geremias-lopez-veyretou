@@ -399,9 +399,87 @@ Los resultados son coherentes con las complejidades teóricas. La búsqueda line
 
 ## 6. Persistencia (E5)
 
-- Layout del registro binario (campos, `struct`, anchos):
-- Header:
-- Cómo se actualiza un registro por posición:
+En la Entrega 5 se implementó persistencia en dos formatos: texto simple y binario.
+
+### 6.1 Persistencia en texto
+
+El catálogo se guarda en dos archivos de texto:
+
+- `data/canciones.txt`: contiene los datos principales de cada canción.
+- `data/versiones.txt`: contiene las relaciones entre canciones originales y sus versiones.
+
+Los archivos tienen un encabezado en la primera línea y los campos están separados por comas.
+
+Al iniciar el programa, las canciones se cargan desde `canciones.txt` y luego se aplican las relaciones almacenadas en `versiones.txt`.
+
+Las funciones principales utilizadas son `cargar_txt()`, `cargar_canciones()`, `cargar_versiones()` y `guardar_txt()`.
+
+### 6.2 Persistencia binaria
+
+Para el archivo binario se utilizó el módulo `struct` de Python y registros de longitud fija.
+
+El header se define como:
+
+`struct.Struct("<4s 1s I")`
+
+Su tamaño es de 9 bytes:
+
+- magia `AYED`: 4 bytes;
+- tema `M`: 1 byte, correspondiente a Biblioteca Musical;
+- cantidad de registros: entero sin signo de 4 bytes.
+
+Cada canción se almacena con el formato:
+
+`struct.Struct("<I 32s 45s 35s 20s 2H")`
+
+Cada registro ocupa 140 bytes:
+
+- `id`: 4 bytes;
+- `titulo`: 32 bytes;
+- `artista`: 45 bytes;
+- `album`: 35 bytes;
+- `genero`: 20 bytes;
+- `anio`: 2 bytes;
+- `duracion_seg`: 2 bytes.
+
+Las cadenas se codifican en UTF-8 y se completan con bytes nulos (`\x00`) hasta alcanzar el ancho fijo definido para cada campo. Si un texto supera el ancho disponible, se genera `ArchivoInvalidoError` en lugar de recortarlo silenciosamente.
+
+Las relaciones entre versiones no se guardan dentro del registro binario. Se mantienen en `versiones.txt`, lo que permite conservar un registro binario de longitud fija simple.
+
+### 6.3 Actualización directa con `seek`
+
+Para modificar una canción ya almacenada en el archivo binario se busca primero su posición dentro del archivo y luego se calcula el byte donde comienza el registro:
+
+`HEADER.size + posicion * FORMATO.size`
+
+En este proyecto:
+
+`9 + posicion * 140`
+
+Luego se utiliza `seek()` para mover el cursor directamente hasta esa posición y sobrescribir únicamente ese registro.
+
+De esta forma, una modificación no requiere reescribir todo el archivo binario.
+
+En cambio, al realizar un alta o una baja se vuelve a generar el archivo binario completo para mantener correctamente la cantidad de registros del header y las posiciones consecutivas de los registros.
+
+### 6.4 Validación de archivos
+
+Se implementó la excepción propia `ArchivoInvalidoError` para detectar errores de persistencia.
+
+Entre los casos controlados se encuentran:
+
+- archivo binario truncado;
+- magia incorrecta en el header;
+- tema incorrecto en el archivo binario;
+- archivo de texto con una cantidad incorrecta de campos;
+- IDs duplicados en `canciones.txt`;
+- posiciones inválidas al realizar una actualización directa.
+
+Además, antes de sobrescribir el archivo binario completo, los registros se convierten al formato binario para comprobar que pueden almacenarse correctamente. De esta manera, un registro inválido no comienza a sobrescribir un archivo binario existente.
+
+Los errores de persistencia son manejados por el programa mediante `ArchivoInvalidoError`, mostrando un mensaje claro en lugar de finalizar con un traceback.
+
+
 
 ## 7. Reparto de trabajo (E6)
 
