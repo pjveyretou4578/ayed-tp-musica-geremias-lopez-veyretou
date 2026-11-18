@@ -48,10 +48,35 @@ def obtener_duracion(cancion):
     return cancion.duracion_seg
 
 
-def pendiente():
-    print()
-    print("Todavía no está implementado. Completar en la entrega que corresponde.")
+def ver_detalle():
 
+    print()
+    print("--- Detalle de canción ---")
+
+    entrada = input("Ingrese ID de la canción: ").strip()
+
+    if not entrada.isdigit():
+        print("El ID debe ser numérico.")
+        return
+
+    id_cancion = int(entrada)
+
+    cancion = biblioteca.buscar_por_id(id_cancion)
+
+    if cancion is None:
+        print("Canción no encontrada.")
+        return
+
+    print()
+    print("ID:", cancion.id)
+    print("Título:", cancion.titulo)
+    print("Artista:", cancion.artista)
+    print("Álbum:", cancion.album)
+    print("Género:", cancion.genero)
+    print("Año:", cancion.anio)
+    print("Duración:", cancion.duracion_seg, "segundos")
+    print("Versión de:", cancion.version_de)
+    print("Tipo de versión:", cancion.tipo_version)
 
 def mostrar_menu():
 
@@ -75,11 +100,11 @@ def menu_playlist():
 
     while True:
 
-        print()
         print("--- Playlist ---")
         print("1. Agregar cancion")
         print("2. Eliminar cancion")
-        print("3. Listar playlist")
+        print("3. Cambiar orden")
+        print("4. Listar playlist")
         print("0. Volver")
 
         print()
@@ -151,6 +176,60 @@ def menu_playlist():
 
         elif opcion == "3":
 
+            while True:
+
+                print()
+                print("--- Cambiar orden de la playlist ---")
+                playlist.listar()
+
+                print()
+                print("1. Mover canción al inicio")
+                print("2. Mover canción al final")
+                print("0. Volver")
+
+                print()
+                opcion_orden = input("Ingrese una opcion: ").strip()
+
+                if opcion_orden == "0":
+                    break
+
+                if opcion_orden != "1" and opcion_orden != "2":
+                    print("Opcion invalida.")
+                    continue
+
+                entrada = input("Ingrese ID de la canción: ").strip()
+
+                if not entrada.isdigit():
+                    print("El ID debe ser numérico.")
+                    continue
+
+                id_cancion = int(entrada)
+
+                cancion_en_playlist = None
+
+                for cancion in playlist:
+                    if cancion.id == id_cancion:
+                        cancion_en_playlist = cancion
+                        break
+
+                if cancion_en_playlist is None:
+                    print("La canción no está en la playlist.")
+                    continue
+
+                if opcion_orden == "1":
+                    playlist.mover_al_inicio(cancion_en_playlist)
+                    print("Canción movida al inicio.")
+
+                else:
+                    playlist.mover_al_final(cancion_en_playlist)
+                    print("Canción movida al final.")
+
+                print()
+                print("Playlist actualizada:")
+                playlist.listar()
+
+        elif opcion == "4":
+
             print()
             playlist.listar()
 
@@ -204,7 +283,7 @@ def menu_historial():
             except PilaVaciaError as e:
                 print(e)
 
-        elif opcion == "3":
+        
 
             print()
             print("Historial de reproduccion:")
@@ -827,7 +906,7 @@ def main():
             print("Chau.")
 
         elif opcion == "2":
-            pendiente()
+            ver_detalle()
 
         elif opcion == "9":
             menu_persistencia()

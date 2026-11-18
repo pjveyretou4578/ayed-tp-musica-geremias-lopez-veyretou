@@ -27,6 +27,28 @@ En Windows, si `python` no anda: `py -3 -m src.main`.
 
 Solo biblioteca estándar. No hay `requirements.txt` a propósito.
 
+## Qué hace
+
+El programa permite:
+
+- listar el catálogo de canciones;
+- ver el detalle de una canción;
+- buscar mediante búsqueda lineal y binaria;
+- ordenar mediante selección e inserción;
+- recorrer recursivamente versiones derivadas;
+- administrar una playlist con un máximo de cinco canciones;
+- utilizar una pila para el historial de reproducción;
+- utilizar una cola para la reproducción pendiente;
+- guardar y cargar el catálogo en texto y binario;
+- actualizar registros binarios por posición.
+
+## Limitaciones conocidas
+
+- La playlist admite como máximo cinco canciones.
+- Las relaciones entre versiones se almacenan en `versiones.txt` y no dentro del archivo binario.
+- La recursión supone que las relaciones entre versiones no contienen ciclos.
+- El programa funciona mediante consola y no posee interfaz gráfica.
+
 ## Entregas
 
 Cada vencimiento se marca con un tag. Ver `GIT.md`.

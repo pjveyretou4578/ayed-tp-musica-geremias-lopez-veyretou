@@ -24,11 +24,13 @@ La clase `Cancion` representa una canción del catálogo.
 
 Cada objeto `Cancion` contiene los atributos:
 
-`id`, `titulo`, `artista`, `album`, `genero`, `anio`, `duracion_seg` y `version_de`.
+`id`, `titulo`, `artista`, `album`, `genero`, `anio`, `duracion_seg`, `version_de` y `tipo_version`.
 
 El atributo `version_de` permite relacionar una canción con otra de la cual deriva.
 
 Si `version_de = None`, la canción no está definida como versión de otra canción.
+
+El atributo `tipo_version` indica el tipo de relación con la canción original, por ejemplo `cover`, `live` o `remix`.
 
 ### Biblioteca
 
@@ -39,10 +41,11 @@ Contiene una lista de objetos `Cancion` en el atributo `canciones`.
 Actualmente posee los métodos:
 
 - `listar_catalogo()`: muestra las canciones de la biblioteca.
+- `listar_catalogo_dos_columnas()`: muestra el catálogo en dos columnas y distingue los títulos repetidos.
 - `buscar_por_id(id_cancion)`: busca una canción por su identificador y devuelve el objeto encontrado o `None`.
 - `versiones_directas(id_cancion)`: devuelve una lista con los ids de las canciones que derivan directamente de la canción indicada.
 
-La opción 1 del menú utiliza un objeto `Biblioteca` para listar el catálogo.
+La opción 1 del menú utiliza `listar_catalogo_dos_columnas()` para mostrar el catálogo mediante el recorrido de la colección.
 
 De esta manera, la clase `Biblioteca` se encarga de encontrar las versiones directas y la función `versiones_de()` se encarga de recorrer recursivamente las versiones de esas versiones.
 
@@ -60,6 +63,10 @@ Actualmente posee los métodos:
 - `duracion_total()`: calcula la duración total de las canciones agregadas.
 - `listar()`: muestra las canciones de la playlist.
 - `eliminar_cancion(cancion)`: elimina una canción de la playlist.
+- `mover_al_inicio(cancion)`: mueve una canción existente al comienzo de la playlist.
+- `mover_al_final(cancion)`: mueve una canción existente al final de la playlist.
+
+Los métodos de cambio de orden permiten modificar la posición de las canciones dentro de la playlist sin alterar los datos de las canciones del catálogo. De esta manera se puede cambiar el orden en que serán reproducidas.
 
 Si se intenta superar el máximo de cinco canciones, se lanza `ColeccionLlenaError`.
 
@@ -485,4 +492,6 @@ Los errores de persistencia son manejados por el programa mediante `ArchivoInval
 
 | Integrante | Qué hizo | Qué puede defender |
 | --- | --- | --- |
-|  |  |  |
+| Pablo Veyretou | Desarrollo e integración de las funcionalidades del programa, revisión del menú final, pruebas, correcciones, persistencia, documentación y cierre de la Entrega 6. | Funcionamiento general del programa, modelo de dominio, recursión, TADs, búsqueda y ordenamiento, persistencia y protocolo de pruebas. |
+| Ariadna Geremias | Realizó aportes en distintas entregas del proyecto, entre ellos el desarrollo de relaciones y versiones de canciones que luego fueron integradas al programa. | A definir con la integrante según las partes del proyecto que pueda defender. |
+| Lucas López | No se registraron aportes concretos en las tareas desarrolladas y documentadas del proyecto. | No se asigna una parte específica para la defensa. |

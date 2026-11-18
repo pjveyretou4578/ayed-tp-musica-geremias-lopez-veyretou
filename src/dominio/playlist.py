@@ -38,6 +38,14 @@ class Playlist:
     def eliminar_cancion(self, cancion):
         self.canciones.eliminar(cancion)
 
+    def mover_al_inicio(self, cancion):
+        self.canciones.eliminar(cancion)
+        self.canciones.insertar_al_inicio(cancion)
+
+    def mover_al_final(self, cancion):
+        self.canciones.eliminar(cancion)
+        self.canciones.insertar_al_final(cancion)
+
     def __iter__(self):
         for cancion in self.canciones:
             yield cancion
