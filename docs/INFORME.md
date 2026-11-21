@@ -509,4 +509,6 @@ Se realizaron pruebas de reproducción utilizando una cola FIFO y se verificó e
 
 En persistencia se probaron las operaciones de guardar y cargar el catálogo en texto y binario, así como el alta, modificación y baja de una canción de prueba. Al finalizar, se comprobó que el catálogo conservara sus 71 canciones originales.
 
-Los resultados de estas comprobaciones se incorporaron al archivo docs/PROTOCOLO_PRUEBAS.md mediante los casos P16 a P21.
+Como verificación final, se realizó una prueba desde un clon limpio del repositorio de GitHub. El programa inició correctamente con `python -m src.main` y las operaciones principales del menú funcionaron sin depender de archivos locales externos al repositorio.
+
+Los resultados de estas comprobaciones se incorporaron al archivo `docs/PROTOCOLO_PRUEBAS.md` como verificaciones complementarias de la regresión final, manteniendo el protocolo oficial en los casos P01–P15.
