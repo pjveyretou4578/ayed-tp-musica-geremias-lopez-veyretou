@@ -493,5 +493,20 @@ Los errores de persistencia son manejados por el programa mediante `ArchivoInval
 | Integrante | Qué hizo | Qué puede defender |
 | --- | --- | --- |
 | Pablo Veyretou | Desarrollo e integración de las funcionalidades del programa, revisión del menú final, pruebas, correcciones, persistencia, documentación y cierre de la Entrega 6. | Funcionamiento general del programa, modelo de dominio, recursión, TADs, búsqueda y ordenamiento, persistencia y protocolo de pruebas. |
-| Ariadna Geremias | Realizó aportes en distintas entregas del proyecto, entre ellos el desarrollo de relaciones y versiones de canciones que luego fueron integradas al programa. | A definir con la integrante según las partes del proyecto que pueda defender. |
+| Ariadna Geremias | Realizó aportes en distintas entregas del proyecto, entre ellos el desarrollo de relaciones y versiones de canciones que luego fueron integradas al programa. Participó en las distintas etapas de desarrollo del proyecto integrador, colaborando en la implementación, revisión y prueba de funcionalidades, detección y corrección de errores, validación de resultados y documentación de las entregas. | Puede explicar el funcionamiento general de la Biblioteca Musical, las estructuras de datos utilizadas, las búsquedas y los algoritmos de ordenamiento, la recursión, la persistencia de archivos, el manejo de excepciones y las pruebas realizadas. |
 | Lucas López | No se registraron aportes concretos en las tareas desarrolladas y documentadas del proyecto. | No se asigna una parte específica para la defensa. |
+
+
+## 8. Revisión e integración final (E6)
+
+Durante la revisión final de la Entrega 6 se ejecutaron pruebas funcionales sobre las opciones del menú principal y sus submenús.
+
+Se detectó un error en la opción "Ver historial completo", que no estaba asociada correctamente a la opción 3 del submenú. Se corrigió la estructura condicional y se verificó su funcionamiento.
+
+También se ajustó la eliminación de canciones de la playlist para buscar la canción dentro de la propia colección. Posteriormente, se comprobó que las operaciones de agregar y eliminar funcionaran correctamente.
+
+Se realizaron pruebas de reproducción utilizando una cola FIFO y se verificó el avance mediante Next, la actualización del historial y el comportamiento cuando la cola queda vacía.
+
+En persistencia se probaron las operaciones de guardar y cargar el catálogo en texto y binario, así como el alta, modificación y baja de una canción de prueba. Al finalizar, se comprobó que el catálogo conservara sus 71 canciones originales.
+
+Los resultados de estas comprobaciones se incorporaron al archivo docs/PROTOCOLO_PRUEBAS.md mediante los casos P16 a P21.

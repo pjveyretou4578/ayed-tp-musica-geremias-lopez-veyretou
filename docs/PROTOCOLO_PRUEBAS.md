@@ -36,3 +36,25 @@ Además de los casos P01–P15, se verificaron nuevamente las diez operaciones d
 - salida normal del programa.
 
 Las operaciones continúan funcionando sin traceback.
+
+
+## Verificaciones adicionales realizadas en E6
+
+Durante la revisión final se ejecutaron las siguientes comprobaciones:
+
+| ID | Prueba | Resultado |
+| --- | --- | --- |
+| P16 | Agregar y eliminar canciones de la playlist | PASA |
+| P17 | Reproducción de canciones en orden FIFO y consulta del historial | PASA |
+| P18 | Búsqueda binaria con ordenamiento previo del catálogo por título | PASA |
+| P19 | Ordenamiento por selección (duración) e inserción (artista) | PASA |
+| P20 | Desencolar directamente una cola vacía y comprobar `ColaVaciaError` | PASA |
+| P21 | Validar archivos binarios con encabezado incompleto, magia incorrecta, tema incorrecto y registros faltantes; validar texto con campos incompletos | PASA |
+
+### Observaciones de las pruebas
+
+- Se corrigieron errores en el menú de historial y en la eliminación de canciones de la playlist.
+- La búsqueda binaria informó que ordenó el catálogo por título antes de buscar.
+- Las pruebas directas de excepciones mostraron el traceback esperado, confirmando que se lanzan `ColaVaciaError` y `ArchivoInvalidoError`.
+- Las pruebas de archivos inválidos se realizaron con archivos temporales, sin modificar los datos originales.
+- Se verificó desde las opciones 5 y 7 del menú que los archivos inválidos generan mensajes controlados mediante `ArchivoInvalidoError`, sin traceback, y que el programa continúa funcionando.

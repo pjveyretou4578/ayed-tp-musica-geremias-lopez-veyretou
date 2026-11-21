@@ -165,14 +165,21 @@ def menu_playlist():
 
             id_cancion = int(entrada)
 
-            cancion = biblioteca.buscar_por_id(id_cancion)
+            cancion_en_playlist = None
 
-            if cancion is None:
-                print("Cancion no encontrada.")
+            for cancion in playlist:
+                if cancion.id == id_cancion:
+                    cancion_en_playlist = cancion
+                    break
+
+            if cancion_en_playlist is None:
+                print("La cancion no esta en la playlist.")
 
             else:
-                playlist.eliminar_cancion(cancion)
-                print("Cancion eliminada.")
+                playlist.eliminar_cancion(cancion_en_playlist)
+
+                print("Playlist despues de eliminar:")
+                playlist.listar()
 
         elif opcion == "3":
 
@@ -268,6 +275,7 @@ def menu_historial():
             except PilaVaciaError as e:
                 print(e)
 
+        
         elif opcion == "2":
 
             try:
@@ -283,7 +291,7 @@ def menu_historial():
             except PilaVaciaError as e:
                 print(e)
 
-        
+        elif opcion == "3":
 
             print()
             print("Historial de reproduccion:")
@@ -294,9 +302,10 @@ def menu_historial():
                     "-",
                     cancion.artista
                 )
+
         else:
             print("Opcion invalida.")
-
+        
 
 def menu_reproduccion():
 
